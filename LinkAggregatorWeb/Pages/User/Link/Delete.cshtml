@@ -1,0 +1,17 @@
+﻿@page
+@model LinkAggregatorWeb.Pages.User.Link.DeleteModel
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary pl-3">Delete URL</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="HyperLink.Url"></label>
+            <input asp-for="HyperLink.Url" disabled class="form-control disabled" />
+        </div>
+        <button type="submit" class="btn btn-danger" style="width:150px">Delete</button>
+        <a asp-page="Index" class="btn btn-secondary" style="width:150px">Back</a>
+    </div>
+</form>

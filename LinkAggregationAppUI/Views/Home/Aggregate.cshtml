@@ -1,0 +1,17 @@
+﻿@model LinkAggregationAppUI.Views.Home.AggregateModel
+
+<h1>Please insert your hyperlink below:</h1>
+<div class="align-baseline">
+    <input asp-for="urlToRedirect" placeholder="yourLink" />
+    <button class="btn btn-primary" type="submit" onclick="OnPost(urlToRedirect)">RENDER NEW URL</button>
+
+    <div class="align-content-end">
+       @* <label>Your link: </label>
+        <input asp-for="urlToRedirect" placeholder="" />*@
+    </div>
+</div>
+
+
+@{
+
+}

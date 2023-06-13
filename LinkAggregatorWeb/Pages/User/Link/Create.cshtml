@@ -1,0 +1,38 @@
+﻿@page
+@model LinkAggregatorWeb.Pages.User.Link.CreateModel
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary pl-3">Create URL</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="All"></div>
+   
+    </div>
+
+        <div class="mb-3">
+            <label asp-for="HyperLink.Url"></label>
+            <input asp-for="HyperLink.Url" class="form-control" />
+        </div>
+        <div class="d-inline mb-3">
+            <label asp-for="HyperLink.ValidFrom"></label>
+            <input asp-for="HyperLink.ValidFrom" class="form-control" />
+            <span asp-validation-for="HyperLink.ValidFrom" class="text-danger"></span>
+        </div>
+        <div class="d-inline mb-3">
+            <label asp-for="HyperLink.ValidTo"></label>
+            <input asp-for="HyperLink.ValidTo" class="form-control" />
+            <span asp-validation-for="HyperLink.ValidTo" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3 m-3" style="width:150px;">Render</button>
+        <a asp-page="Index" class="btn btn-secondary mb-3 m-3" style="width:150px">Back</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}
+
