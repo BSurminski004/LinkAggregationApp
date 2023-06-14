@@ -20,7 +20,7 @@ namespace LinkAggregator.DataAccess.Repository
         public string RenderHashCode(HyperLink hyperLink)
         {
             string hashCode = (hyperLink.ValidFrom.ToString() +  hyperLink.Id.ToString())
-                .Replace(':','#').Replace('/','#').Replace(' ','#');
+                .Replace(':','(').Replace('/','^').Replace(' ','!');
             return hashCode;
         }
 

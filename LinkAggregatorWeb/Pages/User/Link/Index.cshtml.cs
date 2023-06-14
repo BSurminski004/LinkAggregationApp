@@ -9,6 +9,7 @@ namespace LinkAggregatorWeb.Pages.User.Link
     {
         private IHyperLinkRepository _HyperLinkRepository { get; set; }
         public IEnumerable<HyperLink> HyperLinks { get; set; }
+        public string locHost { get; set; }
         public string CopyText { get; set; }
         public IndexModel(IHyperLinkRepository HyperLinkRepository)
         {
@@ -17,6 +18,9 @@ namespace LinkAggregatorWeb.Pages.User.Link
         public void OnGet()
         {
             HyperLinks = _HyperLinkRepository.GetAll();
+            locHost = "https://localhost:7282/url/Redirect/";
+
+
         }
     }
 }

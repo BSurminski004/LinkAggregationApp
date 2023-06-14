@@ -1,46 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using LinkAggregator.DataAccess.Repository.IRepository;
+using LinkAggregator.DataAccess.Repository;
 
 namespace LinkAggregatorWeb.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("url")]
     [ApiController]
     public class HyperLinkController : Controller
     {
-        [HttpGet("YtRedirect")]
-        public IActionResult YtRedirect()
+        private IHyperLinkRepository _HyperLinkRepository { get; set; }
+
+        public HyperLinkController(IHyperLinkRepository HyperLinkRepository)
         {
-
-            string youtubeUrl = "https://www.youtube.com/";
-
-            // Przekierowanie na stronę YouTube
-            return Redirect(youtubeUrl);
+            _HyperLinkRepository = HyperLinkRepository;
         }
 
-        [HttpGet("RedUrl")]
-        public IActionResult RedUrl(string hashCode)
+        [HttpGet("Redirect/{param}")]
+        public IActionResult YtRedirect(string param)
         {
-            try
+            //https://localhost:7282/url/Redirect/6^13^2023!11(00(00!PM0
+            if (_HyperLinkRepository.GetAll().Any(e => e.HashCode == param))
             {
-                var headers = Request.Headers;
-                string ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
+                string url = _HyperLinkRepository.GetFirstOrDefault(x => x.HashCode == param).Url;
+                string ipAddress = Request.HttpContext.Connection.RemoteIpAddress?.ToString();
+                return Redirect(url);
             }
-            catch (Exception e)
+            else
             {
-                string m = e.Message;
+                return NotFound();
             }
-            //var headers = Request.Headers;
-            //string ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
-            string youtubeUrl = $"https://www.youtube.com/watch?v={hashCode}";
-            // Przekierowanie na stronę YouTube
-            return Redirect(youtubeUrl);
-        }
-        //public IActionResult YoutubeRedirect()
-        //{
-        //    // Tworzenie URL przekierowania na YouTube
             
-        //}
-
-
+        }
     }
 }

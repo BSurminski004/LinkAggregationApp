@@ -7,13 +7,17 @@
             <h2 class="text-primary pl-3">Create URL</h2>
             <hr />
         </div>
-        <div asp-validation-summary="All"></div>
-   
-    </div>
 
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="HyperLink.Name"></label>
+            <input asp-for="HyperLink.Name" class="form-control" />
+            <span asp-validation-for="HyperLink.Name" class="text-danger"></span>
+        </div>
         <div class="mb-3">
             <label asp-for="HyperLink.Url"></label>
             <input asp-for="HyperLink.Url" class="form-control" />
+            <span asp-validation-for="HyperLink.Url" class="text-danger"></span>
         </div>
         <div class="d-inline mb-3">
             <label asp-for="HyperLink.ValidFrom"></label>

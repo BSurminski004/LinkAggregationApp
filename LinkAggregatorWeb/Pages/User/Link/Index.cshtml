@@ -4,7 +4,7 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
-    <div class="row pt-4">
+    <div class="row justify-content-start pt-4">
         <div class="col-6">
             <h2 class="text-primary">URLs List</h2>
         </div>
@@ -26,6 +26,9 @@
                     URL
                 </th>
                 <th>
+                    Aggregate URL
+                </th>
+                <th>
                     HashCode
                 </th>
                 <th>
@@ -37,6 +40,7 @@
                 <th>
                     Valid To
                 </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -45,6 +49,7 @@
                 <tr>
                     <td>@obj.Name</td>
                     <td>@obj.Url</td>
+                    <td>@(Model.locHost + obj.HashCode)</td>
                     <td>@obj.HashCode</td>
                     <td>
                         <div class="w-75 btn-group">
