@@ -2,22 +2,33 @@
 @model LinkAggregatorWeb.Pages.User.Link.EditModel
 
 <form method="post">
-    <input hidden asp-for="Category.Id" />
+    <input hidden asp-for="HyperLink.Id" />
+    <input hidden asp-for="HyperLink.HashCode" />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary pl-3">Edit Category</h2>
+            <h2 class="text-primary pl-3">Edit URL</h2>
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
         <div class="mb-3">
-            <label asp-for="Category.Name"></label>
-            <input asp-for="Category.Name" class="form-control" />
-            <span asp-validation-for="Category.Name" class="text-danger"></span>
+            <label asp-for="HyperLink.Name"></label>
+            <input asp-for="HyperLink.Name" class="form-control" />
+            <span asp-validation-for="HyperLink.Name" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="Category.DisplayOrder"></label>
-            <input asp-for="Category.DisplayOrder" class="form-control" />
-            <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
+            <label asp-for="HyperLink.Url"></label>
+            <input asp-for="HyperLink.Url" class="form-control" />
+            <span asp-validation-for="HyperLink.Url" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="HyperLink.ValidFrom"></label>
+            <input asp-for="HyperLink.ValidFrom" class="form-control" />
+            <span asp-validation-for="HyperLink.ValidFrom" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="HyperLink.ValidTo"></label>
+            <input asp-for="HyperLink.ValidTo" class="form-control" />
+            <span asp-validation-for="HyperLink.ValidTo" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px;">Update</button>
         <a asp-page="Index" class="btn btn-secondary" style="width:150px">Back</a>

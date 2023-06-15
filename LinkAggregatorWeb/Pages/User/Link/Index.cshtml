@@ -3,7 +3,7 @@
 
 <partial name="_Notification" />
 
-<div class="container p-3">
+<div class="container p-3 w-100">
     <div class="row justify-content-start pt-4">
         <div class="col-6">
             <h2 class="text-primary">URLs List</h2>
@@ -15,74 +15,82 @@
         </div>
     </div>
     <br /><br />
-
-    <table class="table table-bordered table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    URL
-                </th>
-                <th>
-                    Aggregate URL
-                </th>
-                <th>
-                    HashCode
-                </th>
-                <th>
-                    Copy
-                </th>
-                <th>
-                    Valid From
-                </th>
-                <th>
-                    Valid To
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var obj in Model.HyperLinks)
-            {
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>@obj.Name</td>
-                    <td>@obj.Url</td>
-                    <td>@(Model.locHost + obj.HashCode)</td>
-                    <td>@obj.HashCode</td>
-                    <td>
-                        <div class="w-75 btn-group">
-                            <button type="button" onclick="copyToClipboard(@obj.HashCode)">
-                                <i class="bi bi-files"></i>
-                            </button>
-                        </div>
-                    </td>
-                    <td>@obj.ValidFrom</td>
-                    <td>@obj.ValidTo</td>
-                    <td>
-                        <div class="w-75 btn-group">
-                            <a asp-page="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <a asp-page="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
-                                <i class="bi bi-trash-fill"></i>
-                            </a>
-                        </div>
-                    </td>
+                    <th >
+                        Name
+                    </th>
+                    <th >
+                        URL
+                    </th>
+                    <th >
+                        HashCode
+                    </th>
+                <th class="text-center">
+                        Copy
+                    </th>
+                <th class="text-center">
+                        Valid From
+                    </th>
+                <th class="text-center">
+                        Valid To
+                    </th>
+                    <th></th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var obj in Model.HyperLinks)
+                {
+                    <tr>
+                        @if ((DateTime.Now - obj.ValidTo) > TimeSpan.Zero)
+                        {
+                            <td class="text-danger">@obj.Name</td>
+                        }
+                        else
+                        {
+                            <td class="text-success">@obj.Name</td>
+                        }
+                    <td>@obj.Url.</td>
+                    <td id="textToCopy">@obj.HashCode</td>
+                        <td>
+                            <div class="w-75 btn-group">
+                            <button type="button" onclick="copyText()">
+                                    <i class="bi bi-files"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td>@obj.ValidFrom</td>
+                        <td>@obj.ValidTo</td>
+                        <td>
+                            <div class="w-75 btn-group">
+                                <a asp-page="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a asp-page="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash-fill"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 </div>
 
-<script>
-    function copyToClipboard(string hashCode) {
-        var copyText = hashCode;
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        alert("Copied to clipboard: " + copyText.value);
-    }
-</script>
+
+@section scripts {
+    <script>
+        function copyText() {
+            debugger;
+            let textToCopy = document.getElementById('textToCopy');
+            let range = document.createRange();
+            range.selectNode(textToCopy);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+}

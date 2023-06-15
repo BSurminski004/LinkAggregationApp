@@ -18,6 +18,7 @@ namespace LinkAggregatorWeb
                 )); ;
 
             builder.Services.AddScoped<IHyperLinkRepository, HyperLinkRepository>();
+            builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
 
             var app = builder.Build();
 

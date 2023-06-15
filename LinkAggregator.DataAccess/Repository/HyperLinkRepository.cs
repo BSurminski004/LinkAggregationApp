@@ -31,8 +31,9 @@ namespace LinkAggregator.DataAccess.Repository
         public void Update(HyperLink hyperLink)
         {
             var hyperLinkFromDb = _db.HyperLink.FirstOrDefault(u => u.Id == hyperLink.Id);
+            hyperLinkFromDb.Name = hyperLink.Name;
             hyperLinkFromDb.Url = hyperLink.Url;
-            //hyperLinkFromDb.HashCode = hyperLink.HashCode;
+            hyperLinkFromDb.HashCode = hyperLink.HashCode;
             hyperLinkFromDb.ValidFrom = hyperLink.ValidFrom;
             hyperLinkFromDb.ValidTo = hyperLink.ValidTo;
         }

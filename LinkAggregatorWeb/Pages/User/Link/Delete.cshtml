@@ -4,13 +4,27 @@
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary pl-3">Delete URL</h2>
+            <h2 class="text-primary pl-3">Delete URL</b></h2>
             <hr />
+        </div>
+        <h4>Are you sure you want to delete: </h4>
+        <div class="mb-3">
+            <label asp-for="HyperLink.Name"></label>
+            <input asp-for="HyperLink.Name" disabled class="form-control disabled" />
         </div>
         <div class="mb-3">
             <label asp-for="HyperLink.Url"></label>
             <input asp-for="HyperLink.Url" disabled class="form-control disabled" />
         </div>
+        <div class="mb-3">
+            <label asp-for="HyperLink.ValidTo"></label>
+            <input asp-for="HyperLink.ValidTo" disabled class="form-control disabled" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="HyperLink.ValidFrom"></label>
+            <input asp-for="HyperLink.ValidFrom" disabled class="form-control disabled" />
+        </div>
+
         <button type="submit" class="btn btn-danger" style="width:150px">Delete</button>
         <a asp-page="Index" class="btn btn-secondary" style="width:150px">Back</a>
     </div>

@@ -11,7 +11,6 @@ namespace LinkAggregatorWeb.Pages.User.Link
     {
         private IHyperLinkRepository _HyperLinkRepository { get; set; }
         public HyperLink HyperLink { get; set; }
-        public string locHost { get; set; }
         public EditModel(IHyperLinkRepository HyperLinkRepository)
         {
             _HyperLinkRepository = HyperLinkRepository;
@@ -26,11 +25,6 @@ namespace LinkAggregatorWeb.Pages.User.Link
             if (HyperLink.ValidFrom == HyperLink.ValidTo)
             {
                 ModelState.AddModelError("Hyperlink.ValidFrom", "\n Minimum validation time is 24h!\n");
-            }
-            if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.Url == HyperLink.Url) != null)
-            {
-                ModelState.AddModelError("Hyperlink.Url", "\n Thats URL already exists!\n");
-                TempData["failed"] = "Thats URL already exists!";
             }
 
             if (ModelState.IsValid)

@@ -1,4 +1,56 @@
 ﻿@page
 @model LinkAggregatorWeb.Pages.User.StatisticsModel
-@{
-}
+<div class="container p-3 justify-content-center">
+    <h2 class="text-center text-primary">URLs STATISTICS</h2>
+    <div class="d-flex justify-content-center w-100">
+        <br /><br />
+        <canvas id="urlVisitsChart" class="w-50 h-50"></canvas>
+        <br /><br />
+        <canvas id="dayOfVisitUrl" class="w-25 h-25"></canvas>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const VisitsCharts = document.getElementById('urlVisitsChart');
+    var dataFromDb = @Json.Serialize(Model.labels);
+    new Chart(VisitsCharts, {
+        type: 'bar',
+        data: {
+            labels: dataFromDb,
+            datasets: [{
+                label: 'Amount of visits to your URLs',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const VisitUrl = document.getElementById('dayOfVisitUrl');
+    new Chart(VisitUrl, {
+        type: 'pie',
+        data: {
+            labels: dataFromDb,
+            datasets: [{
+                label: 'This Month visits',
+                data: [100, 30, 55, 28, 2],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(255, 205, 150)',
+                    'rgb(32, 205, 150)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+    });
+</script>
+
