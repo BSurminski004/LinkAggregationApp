@@ -3,10 +3,9 @@
 
 <form method="post">
     <input hidden asp-for="HyperLink.Id" />
-    <input hidden asp-for="HyperLink.HashCode" />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary pl-3">Edit URL</h2>
+            <h2 class="text-white pl-3">Edit URL</h2>
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
@@ -19,6 +18,11 @@
             <label asp-for="HyperLink.Url"></label>
             <input asp-for="HyperLink.Url" class="form-control" />
             <span asp-validation-for="HyperLink.Url" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="HyperLink.HashCode"></label>
+            <input asp-for="HyperLink.HashCode" class="form-control" />
+            <span asp-validation-for="HyperLink.HashCode" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="HyperLink.ValidFrom"></label>

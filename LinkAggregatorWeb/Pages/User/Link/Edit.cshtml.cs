@@ -22,9 +22,21 @@ namespace LinkAggregatorWeb.Pages.User.Link
 
         public async Task<IActionResult> OnPost()
         {
-            if (HyperLink.ValidFrom == HyperLink.ValidTo)
+            if (HyperLink.ValidFrom >= HyperLink.ValidTo)
             {
-                ModelState.AddModelError("Hyperlink.ValidFrom", "\n Minimum validation time is 24h!\n");
+                ModelState.AddModelError("Hyperlink.ValidFrom", "Minimum validation time is 24h!");
+            }
+
+            if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.Url == HyperLink.Url) != null)
+            {
+                ModelState.AddModelError("Hyperlink.Url", "That URL already exists!\n");
+                TempData["failed"] = "Thats URL already exists!";
+            }
+
+            if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.HashCode == HyperLink.HashCode) != null)
+            {
+                ModelState.AddModelError("Hyperlink.HashCode", "That Hashcode already exists!\n");
+                TempData["failed"] = "Thats Hashcode already exists!";
             }
 
             if (ModelState.IsValid)

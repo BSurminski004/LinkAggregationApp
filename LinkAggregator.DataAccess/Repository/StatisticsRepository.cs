@@ -11,14 +11,31 @@ namespace LinkAggregator.DataAccess.Repository
         {
             _db = db;
         }
-        public void GetData(HttpClient httpClient, HyperLink hyperLink)
+        //public void GetData(HttpClient httpClient, HyperLink hyperLink)
+        public void GetData(string ipAddress, HyperLink hyperLink)
         {
-            
+            Statistic stat1 = new Statistic()
+            {
+                IpNumber = ipAddress,
+                HyperLinkId = hyperLink.Id,
+                DateVisit = DateTime.Now.ToString("dd-MM-yyyy"),
+                TimeVisit = DateTime.Now.ToString("HH-mm"),
+                Hyperlink = hyperLink
+            }; 
+
+            _db.Statistic.Add(stat1);
+        }
+
+        public void BuildChart(Statistic statistic)
+        {
+            throw new NotImplementedException();
         }
 
         public void Save()
         {
             _db.SaveChanges();
         }
+
+       
     }
 }

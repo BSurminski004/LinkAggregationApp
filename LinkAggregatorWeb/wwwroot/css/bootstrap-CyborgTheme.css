@@ -2784,6 +2784,43 @@ textarea.form-control-lg {
     border-radius: 1rem;
 }
 
+.welcome-section {
+    text-align: center;
+}
+
+.welcome-text {
+    margin-top: 30px;
+    font-size: 40px;
+    color: white;
+}
+
+.get-started-btn, .btn-add-url {
+    font-size: 20px;
+    padding: 15px 30px;
+    background-color: dimgrey;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.get-started-btn:hover {
+    background-color: white;
+    transform: scale(1.2);
+    color: black;
+}
+
+.btn-dark:hover {
+    transform: scale(1.1);
+}
+
 .form-range:disabled {
     pointer-events: none;
 }

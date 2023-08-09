@@ -11,7 +11,7 @@ namespace LinkAggregation.Models
         [Required]
         public string Url { get; set; }
         public string? HashCode { get; set; }
-        public DateTime? ValidFrom { get; set; } = DateTime.Now;
+        public DateTime? ValidFrom { get; set; }
         public DateTime? ValidTo { get; set; }
     }
 }

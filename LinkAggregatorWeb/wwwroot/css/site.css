@@ -2791,6 +2791,7 @@ textarea.form-control-lg {
     border-radius: 1rem;
 }
 
+
 .form-range:disabled {
     pointer-events: none;
 }

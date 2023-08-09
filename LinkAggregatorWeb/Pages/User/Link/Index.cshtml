@@ -3,94 +3,103 @@
 
 <partial name="_Notification" />
 
-<div class="container p-3 w-100">
+<div class="container p-3 w-100 align-content-center">
     <div class="row justify-content-start pt-4">
         <div class="col-6">
-            <h2 class="text-primary">URLs List</h2>
+            <h2 class="text-white">URLs List</h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-page="create" class="btn btn-primary">
-                <i class="bi bi-plus-square"></i> &nbsp;Create New URL
+            <a asp-page="create" class="btn btn-success">
+                <i class="bi bi-plus-square "></i> &nbsp;Create New URL
             </a>
         </div>
     </div>
     <br /><br />
-        <table class="table table-bordered table-striped">
-            <thead>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    URL
+                </th>
+                <th>
+                    HashCode
+                </th>
+                <th class="text-center">
+                    Copy
+                </th>
+                <th class="text-center">
+                    Valid From
+                </th>
+                <th class="text-center">
+                    Valid To
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.HyperLinks)
+            {
                 <tr>
-                    <th >
-                        Name
-                    </th>
-                    <th >
-                        URL
-                    </th>
-                    <th >
-                        HashCode
-                    </th>
-                <th class="text-center">
-                        Copy
-                    </th>
-                <th class="text-center">
-                        Valid From
-                    </th>
-                <th class="text-center">
-                        Valid To
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var obj in Model.HyperLinks)
-                {
-                    <tr>
-                        @if ((DateTime.Now - obj.ValidTo) > TimeSpan.Zero)
-                        {
-                            <td class="text-danger">@obj.Name</td>
-                        }
-                        else
-                        {
-                            <td class="text-success">@obj.Name</td>
-                        }
+                    @if ((DateTime.Now - obj.ValidTo) > TimeSpan.Zero)
+                    {
+                        <td class="text-danger">@obj.Name</td>
+                    }
+                    else
+                    {
+                        <td class="text-success">@obj.Name</td>
+                    }
                     <td>@obj.Url.</td>
                     <td id="textToCopy">@obj.HashCode</td>
-                        <td>
-                            <div class="w-75 btn-group">
-                            <button type="button" onclick="copyText()">
-                                    <i class="bi bi-files"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <td>@obj.ValidFrom</td>
-                        <td>@obj.ValidTo</td>
-                        <td>
-                            <div class="w-75 btn-group">
-                                <a asp-page="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a asp-page="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
-                                    <i class="bi bi-trash-fill"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
+                    <td>
+                        <div class="w-75 btn-group">
+                            <button class="copyButton" data-text="@obj.HashCode">
+                                <i class="bi bi-files"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>@obj.ValidFrom.ToString()</td>
+                    <td>@obj.ValidTo.ToString()</td>
+                    <td>
+                        <div class="w-75 btn-group">
+                            <a asp-page="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-page="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </div>
 
 
 @section scripts {
     <script>
-        function copyText() {
-            debugger;
-            let textToCopy = document.getElementById('textToCopy');
-            let range = document.createRange();
-            range.selectNode(textToCopy);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-            document.execCommand('copy');
-            window.getSelection().removeAllRanges();
+        // Przycisk kopiowania
+        const copyButtons = document.querySelectorAll(".copyButton");
+        copyButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const textToCopy = "https://localhost:7282/" + button.getAttribute("data-text");
+                copyToClipboard(textToCopy);
+        
+            });
+        });
+
+        // Kopiowanie do schowka
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("textarea");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
         }
     </script>
 }

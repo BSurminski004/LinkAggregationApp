@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkAggregator.Models", "Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkAggregatorWeb", "LinkAggregatorWeb\LinkAggregatorWeb.csproj", "{E1467F3D-B63B-42BE-B139-985B01B508CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkAggregator.DataAccess", "LinkAggregator.DataAccess\LinkAggregator.DataAccess.csproj", "{9380A2E3-50B3-48DA-9D87-19B2D34BC2BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkAggregator.DataAccess", "LinkAggregator.DataAccess\LinkAggregator.DataAccess.csproj", "{9380A2E3-50B3-48DA-9D87-19B2D34BC2BA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2B9FBA59-9B68-41CF-AB92-EF6D07E322F2} = {2B9FBA59-9B68-41CF-AB92-EF6D07E322F2}
 	EndProjectSection

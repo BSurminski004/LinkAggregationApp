@@ -1,17 +1,46 @@
 ﻿@page
 @model LinkAggregatorWeb.Pages.User.StatisticsModel
-<div class="container p-3 justify-content-center">
-    <h2 class="text-center text-primary">URLs STATISTICS</h2>
-    <div class="d-flex justify-content-center w-100">
-        <br /><br />
-        <canvas id="urlVisitsChart" class="w-50 h-50"></canvas>
-        <br /><br />
-        <canvas id="dayOfVisitUrl" class="w-25 h-25"></canvas>
+
+<div style="display:flex">
+    <div style="width: 200px; background-color: #f0f0f0; padding: 10px;">
+        <h3 style="color:black">YOUR URLs</h3>
+        <ol>
+            @foreach (var item in Model.HyperLinks)
+            {
+                <li><button>@item.Name</button></li>
+            }
+        </ol>
+    </div>
+
+    <div class="container p-3 justify-content-center">
+        <h2 class="text-white pl-3">URLs STATISTICS</h2>
+        <div class="d-flex justify-content-center w-100">
+            <br /><br />
+            <canvas id="urlVisitsChart" class="w-50 h-50"></canvas>
+            <br /><br />
+            <canvas id="dayOfVisitUrl" class="w-25 h-25"></canvas>
+        </div>
+
+        <button id="copyButton" onclick="copyTextToClipboard()">Skopiuj tekst</button>
+
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+    function copyTextToClipboard(var textToCopy) {
+        var textToCopy = "Link to new data"; // Tutaj umieść tekst, który chcesz skopiować
+        var textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+
+        //alert("Tekst został skopiowany do schowka!");
+    }
+
+
     const VisitsCharts = document.getElementById('urlVisitsChart');
     var dataFromDb = @Json.Serialize(Model.labels);
     new Chart(VisitsCharts, {

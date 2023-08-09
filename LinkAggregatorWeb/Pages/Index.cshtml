@@ -2,9 +2,25 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<head>
+    <link rel="stylesheet" href="~/css/bootstrap-CyborgTheme.css" asp-append-version="true" />
+</head>
+
+<div class="welcome-section">
+    <br /><br />
+    <br /><br />
+    <h1 class="display-4" >Welcome to <b>LinkAggregation App</b></h1>
+    <br /><br />
+    <div class="mb-3">
+        <form class="form-floating">
+            <input asp-for="InputPassword" >
+            <span asp-validation-for="InputPassword" class="text-danger"></span>
+        </form>
+    </div>
+    <div class="button-container" type>
+        <a href="User/Link/Index" class="get-started-btn" style="text-decoration:none">Get Started...</a>
+    </div>
 </div>

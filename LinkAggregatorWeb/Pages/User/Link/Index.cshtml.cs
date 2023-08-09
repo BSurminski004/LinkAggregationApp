@@ -9,17 +9,13 @@ namespace LinkAggregatorWeb.Pages.User.Link
     {
         private IHyperLinkRepository _HyperLinkRepository { get; set; }
         public IEnumerable<HyperLink> HyperLinks { get; set; }
-        public string urlToEndpoint { get; set; }
         public IndexModel(IHyperLinkRepository HyperLinkRepository)
         {
             _HyperLinkRepository = HyperLinkRepository;
         }
         public void OnGet()
         {
-            HyperLinks = _HyperLinkRepository.GetAll();
-            urlToEndpoint = "https://localhost:7282/url/Redirect/";
-
-
+            HyperLinks = _HyperLinkRepository.GetAll().OrderByDescending(x => x.Id);
         }
     }
 }

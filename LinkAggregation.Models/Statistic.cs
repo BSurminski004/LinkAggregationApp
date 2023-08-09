@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinkAggregation.Models
 {
@@ -13,8 +8,10 @@ namespace LinkAggregation.Models
         [Key]
         public int Id { get; set; }
         public string IpNumber { get; set; }
-        public DateTime DateVisit { get; set; }
-        public DateTime TimeVisit { get; set; }
+        public string Localization { get; set; }
+        public string Referrer { get; set; }
+        public string DateVisit { get; set; }
+        public string TimeVisit { get; set; }
         [Display(Name = "Hyper Link")]
         public int HyperLinkId { get; set; }
         [ForeignKey("HyperLinkId")]
