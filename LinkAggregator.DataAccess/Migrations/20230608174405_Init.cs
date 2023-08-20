@@ -56,10 +56,10 @@ namespace LinkAggregator.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Statistic");
+                name: "HyperLink");
 
             migrationBuilder.DropTable(
-                name: "HyperLink");
+                name: "Statistic");
         }
     }
 }

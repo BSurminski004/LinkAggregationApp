@@ -26,15 +26,20 @@ namespace LinkAggregatorWeb.Controllers
             if (_HyperLinkRepository.GetAll().Any(e => e.HashCode == param))
             {
                 var hyperLink = _HyperLinkRepository.GetFirstOrDefault(x => x.HashCode == param);
+                if (!hyperLink.IsValid) { goto NotFoundOrNoAvailable; }
+
                 string ipAddress = Request.HttpContext.Connection.RemoteIpAddress?.ToString();
-                _StatRepository.GetData(ipAddress, hyperLink);
+                string? Referer = Request.HttpContext.Request.Headers["Referer"].ToString();
+                _StatRepository.GetData(ipAddress, Referer, hyperLink);
                 return Redirect(URLsChecker.CheckURL(hyperLink.Url));
             }
             else
             {
-                return NotFound();
+             goto NotFoundOrNoAvailable;
             }
-            
+
+        NotFoundOrNoAvailable:
+            return NotFound();
         }
     }
 }

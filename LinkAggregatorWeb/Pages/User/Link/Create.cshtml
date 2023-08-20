@@ -22,13 +22,14 @@
         <div class="mb-3">
             <label asp-for="HyperLink.HashCode"></label>
             <input asp-for="HyperLink.HashCode" class="form-control" />
+            <span asp-validation-for="HyperLink.HashCode" class="text-danger"></span>
         </div>
-        <div class="d-inline mb-3">
+        <div class="mb-3">
             <label asp-for="HyperLink.ValidFrom"></label>
             <input value="@DateTime.Now.ToString("yyyy-MM-dd")" asp-for="HyperLink.ValidFrom" class="form-control" type="date" />
             <span asp-validation-for="HyperLink.ValidFrom" class="text-danger"></span>
         </div>
-        <div class="d-inline mb-3">
+        <div class="mb-3">
             <label asp-for="HyperLink.ValidTo"></label>
             <input asp-for="HyperLink.ValidTo" class="form-control" type="date" />
             <span asp-validation-for="HyperLink.ValidTo" class="text-danger"></span>

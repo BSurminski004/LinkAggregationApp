@@ -1,66 +1,56 @@
 ﻿using LinkAggregation.Models;
 using LinkAggregator.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
-
-
 
 namespace LinkAggregatorWeb.Pages.User
 {
     public class TestsModel : PageModel
     {
-        public List<UrlData> UrlData { get; set; }
-        public List<IpData> IpData { get; set; }
+        public string NameSort { get; set; }
+        public string DateSort { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
 
         private IHyperLinkRepository _HyperLinkRepository { get; set; }
         public IEnumerable<HyperLink> HyperLinks { get; set; }
-        public string[] hyperlinksName { get; set; }
-        public int[] hyperlinksIDs { get; set; }
+
         public TestsModel(IHyperLinkRepository hyperLinkRepository)
         {
             _HyperLinkRepository = hyperLinkRepository;
         }
- 
-        public void OnGet()
+
+        public async void OnGetAsync(string sortOrder, string searchString)
         {
-            // Przykładowe dane URL
-            UrlData = new List<UrlData>
+
+            NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            DateSort = sortOrder == "Date" ? "date_desc" : "date_asc";
+
+            CurrentFilter = searchString;
+
+            HyperLinks = _HyperLinkRepository.GetAll().OrderByDescending(x => x.Id);
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                new UrlData { Url = "abcd", Visits = 100 },
-                new UrlData { Url = "efgh", Visits = 50 },
-                new UrlData { Url = "scsfa", Visits = 75 }
-            };
+                HyperLinks = HyperLinks.Where(s => s.Name.Contains(searchString.ToLower()) || 
+                s.Url.Contains(searchString.ToLower()));
+            }
 
-            // Przykładowe dane IP
-            IpData = new List<IpData>
+            switch (sortOrder)
             {
-                new IpData { IpAddress = "192.168.1.1", Country = "USA" },
-                new IpData { IpAddress = "10.0.0.1", Country = "Canada" },
-                new IpData { IpAddress = "172.16.0.1", Country = "UK" }
-            };
-
-            string[] arrayToPaste = new string[] { "Red", "Blue", "Yellow", "Green", "Purple", "Orange", "Adam", "abcdefg" };
-            string[] hyperlinksName = new string[] { "abcd", "efgh", "scsfa"};
-
-            var data = string.Join(", ", UrlData.Select(d => "'" + d.Url + "'"));
-            var labels = string.Join(", ", UrlData.Select(d => d.Visits));
-
-
-           
+                case "name_desc":
+                    HyperLinks = HyperLinks.OrderByDescending(s => s.Name);
+                    break;
+                case "date_asc":
+                    HyperLinks = HyperLinks.OrderBy(s => s.ValidFrom);
+                    break;
+                case "date_desc":
+                    HyperLinks = HyperLinks.OrderByDescending(s => s.ValidFrom);
+                    break;
+                default:
+                    HyperLinks = HyperLinks.OrderBy(s => s.Name);
+                    break;
+            }
         }
-    }
-
-
-    public class IpData
-    {
-        public string IpAddress { get; set; }
-        public string Country { get; set; }
-    }
-
-    public class UrlData
-    {
-        public string Url { get; set; }
-        public int Visits { get; set; }
     }
 }
 

@@ -14,8 +14,8 @@ namespace LinkAggregator.DataAccess.Repository
 
         public string RenderHashCode(HyperLink hyperLink)
         {
-            string hashCode = (hyperLink.ValidFrom.ToString() +  hyperLink.Id.ToString())
-                .Replace(':','(').Replace('/','^').Replace(' ','!');
+            string hashCode = (hyperLink.ValidFrom.ToString() + hyperLink.Id.ToString())
+                .Replace(':', '(').Replace('/', '^').Replace(' ', '!');
             return hashCode;
         }
 
@@ -31,6 +31,34 @@ namespace LinkAggregator.DataAccess.Repository
             hyperLinkFromDb.HashCode = hyperLink.HashCode;
             hyperLinkFromDb.ValidFrom = hyperLink.ValidFrom;
             hyperLinkFromDb.ValidTo = hyperLink.ValidTo;
+        }
+
+        public void IsValidHyperLinks(IEnumerable<HyperLink> hyperLinks)
+        {
+            bool HasChanges = false;
+
+            foreach (var hyperLink in hyperLinks)
+            {
+                if (hyperLink.IsValid)
+                {
+                    if ((DateTime.Now - hyperLink.ValidTo > TimeSpan.Zero))
+                    {
+                        if (!HasChanges)
+                        {
+                            HasChanges = true;
+                        }
+                        hyperLink.IsValid = false;
+                    }
+                    else continue;
+                }
+                else continue;
+            }
+
+            if (HasChanges)
+            {
+                this.Save();
+            }
+
         }
     }
 }

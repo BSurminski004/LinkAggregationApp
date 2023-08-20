@@ -1,6 +1,11 @@
 ﻿@page
 @model LinkAggregatorWeb.Pages.User.Link.IndexModel
 
+
+@{
+    ViewData["Title"] = "Hyperlinks";
+}
+
 <partial name="_Notification" />
 
 <div class="container p-3 w-100 align-content-center">
@@ -14,27 +19,50 @@
             </a>
         </div>
     </div>
+
+    <form asp-page="./Index" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Search:
+                <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+                <input type="submit" value="Search" class="btn btn-primary" /> |
+                <a asp-page="./Index">Full List</a>
+            </p>
+        </div>
+    </form>
     <br /><br />
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>
-                    Name
-                </th>
+                @if (Model.NameSort == "")
+                {
+                    <th>
+                        <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort" style="text-decoration:none">
+                            <i class="bi bi-arrow-down"></i> Name
+                        </a>
+                    </th>
+                }
+                else if (Model.NameSort == "name_desc")
+                {
+                    <th>
+                        <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort" style="text-decoration:none">
+                            <i class="bi bi-arrow-up"></i> Name
+                        </a>
+                    </th>
+                }
                 <th>
                     URL
                 </th>
-                <th>
+                <th style="color:#2a9fd6">
                     HashCode
                 </th>
                 <th class="text-center">
                     Copy
                 </th>
                 <th class="text-center">
-                    Valid From
-                </th>
-                <th class="text-center">
-                    Valid To
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort" style="text-decoration:none">
+                        Valid From
+                    </a>
                 </th>
                 <th></th>
             </tr>
@@ -43,7 +71,7 @@
             @foreach (var obj in Model.HyperLinks)
             {
                 <tr>
-                    @if ((DateTime.Now - obj.ValidTo) > TimeSpan.Zero)
+                    @if (obj.IsValid == false)
                     {
                         <td class="text-danger">@obj.Name</td>
                     }
@@ -51,7 +79,7 @@
                     {
                         <td class="text-success">@obj.Name</td>
                     }
-                    <td>@obj.Url.</td>
+                    <td>@obj.Url</td>
                     <td id="textToCopy">@obj.HashCode</td>
                     <td>
                         <div class="w-75 btn-group">
@@ -88,7 +116,7 @@
             button.addEventListener("click", function () {
                 const textToCopy = "https://localhost:7282/" + button.getAttribute("data-text");
                 copyToClipboard(textToCopy);
-        
+
             });
         });
 

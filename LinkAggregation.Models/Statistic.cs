@@ -12,8 +12,10 @@ namespace LinkAggregation.Models
         public string Referrer { get; set; }
         public string DateVisit { get; set; }
         public string TimeVisit { get; set; }
+
         [Display(Name = "Hyper Link")]
         public int HyperLinkId { get; set; }
+
         [ForeignKey("HyperLinkId")]
         public HyperLink Hyperlink { get; set; }
     }

@@ -14,9 +14,6 @@ namespace LinkAggregatorWeb.Pages.User.Link
         {
             _HyperLinkRepository = HyperLinkRepository;
         }
-        public void OnGet()
-        {
-        }
 
         public async Task<IActionResult> OnPost()
         {
@@ -26,17 +23,13 @@ namespace LinkAggregatorWeb.Pages.User.Link
             }
             if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.Url == HyperLink.Url) != null)
             {
-                ModelState.AddModelError("Hyperlink.Url", "\n Thats URL already exists!\n");
-                TempData["failed"] = "Thats URL already exists!";
+                ModelState.AddModelError("Hyperlink.Url", "\n Thats URL already exists!\n");  
             }
 
             if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.HashCode == HyperLink.HashCode) != null)
             {
                 ModelState.AddModelError("Hyperlink.HashCode", "That Hashcode already exists!\n");
-                TempData["failed"] = "Thats Hashcode already exists!";
             }
-
-            //HyperLink.HashCode = _HyperLinkRepository.RenderHashCode(HyperLink);
 
             if (ModelState.IsValid)
             {

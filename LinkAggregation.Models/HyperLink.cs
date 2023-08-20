@@ -10,8 +10,11 @@ namespace LinkAggregation.Models
         public string Name { get; set; }
         [Required]
         public string Url { get; set; }
-        public string? HashCode { get; set; }
-        public DateTime? ValidFrom { get; set; }
-        public DateTime? ValidTo { get; set; }
+        [Required]
+        public string HashCode { get; set; }
+        public DateTime ValidFrom { get; set; }
+        public DateTime ValidTo { get; set; }
+        
+        public bool IsValid { get; set; } = true;
     }
 }

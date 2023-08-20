@@ -15,7 +15,7 @@ namespace LinkAggregatorWeb
             builder.Services.AddRazorPages();
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                     builder.Configuration.GetConnectionString("LinkAggregation")
-                )); ;
+                ));
 
             builder.Services.AddScoped<IHyperLinkRepository, HyperLinkRepository>();
             builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
@@ -31,13 +31,11 @@ namespace LinkAggregatorWeb
             }
 
 
-           //Dodac serwis do obslugi http
+            //Dodac serwis do obslugi http
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.MapRazorPages();

@@ -27,12 +27,6 @@ namespace LinkAggregatorWeb.Pages.User.Link
                 ModelState.AddModelError("Hyperlink.ValidFrom", "Minimum validation time is 24h!");
             }
 
-            if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.Url == HyperLink.Url) != null)
-            {
-                ModelState.AddModelError("Hyperlink.Url", "That URL already exists!\n");
-                TempData["failed"] = "Thats URL already exists!";
-            }
-
             if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.HashCode == HyperLink.HashCode) != null)
             {
                 ModelState.AddModelError("Hyperlink.HashCode", "That Hashcode already exists!\n");

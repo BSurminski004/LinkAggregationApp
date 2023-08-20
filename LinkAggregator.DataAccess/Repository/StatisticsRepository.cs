@@ -11,8 +11,7 @@ namespace LinkAggregator.DataAccess.Repository
         {
             _db = db;
         }
-        //public void GetData(HttpClient httpClient, HyperLink hyperLink)
-        public void GetData(string ipAddress, HyperLink hyperLink)
+        public void GetData(string ipAddress, string referer, HyperLink hyperLink)
         {
             Statistic stat1 = new Statistic()
             {
