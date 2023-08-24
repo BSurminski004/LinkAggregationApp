@@ -6,7 +6,6 @@ namespace LinkAggregator.DataAccess.Repository.IRepository
     {
         void Update(HyperLink hyperLink);
         void Save();
-        string RenderHashCode(HyperLink hyperLink);
         void IsValidHyperLinks(IEnumerable<HyperLink> hyperLinks);
     }
 }

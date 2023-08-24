@@ -1,7 +1,9 @@
 using LinkAggregator.DataAccess.DBContext;
 using LinkAggregator.DataAccess.Repository;
 using LinkAggregator.DataAccess.Repository.IRepository;
+using LinkAggregatorWeb.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 namespace LinkAggregatorWeb
 {
@@ -13,6 +15,7 @@ namespace LinkAggregatorWeb
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddHttpClient();
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                     builder.Configuration.GetConnectionString("LinkAggregation")
                 ));

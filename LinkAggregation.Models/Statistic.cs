@@ -7,8 +7,9 @@ namespace LinkAggregation.Models
     {
         [Key]
         public int Id { get; set; }
+        public string HyperLinkName { get; set; }
         public string IpNumber { get; set; }
-        public string Localization { get; set; }
+        public string? Localization { get; set; }
         public string Referrer { get; set; }
         public string DateVisit { get; set; }
         public string TimeVisit { get; set; }

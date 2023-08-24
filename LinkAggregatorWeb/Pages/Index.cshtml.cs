@@ -6,27 +6,41 @@ namespace LinkAggregatorWeb.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        public string Password { get; } = "LetMeIn";
-        public string InputPassword { get; set; }
+        private const string CorrectPassword = "pass123"; 
+        private const int MaxAttempts = 3;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        [BindProperty]
+        public string Password { get; set; }
+        [TempData]
+        public int AttemptsRemaining { get; set; }
+        public bool IsLoggedIn { get; private set; }
+
+        public void OnGet()
         {
-            InputPassword = "";
-            _logger = logger;
+            
+            AttemptsRemaining = MaxAttempts;
+            IsLoggedIn = false;
         }
-
         public async Task<IActionResult> OnPost()
         {
-            if (InputPassword != Password)
+            if (Password == CorrectPassword)
             {
-                ModelState.AddModelError("InputPassword", " Well that was miss, try again!");
+                IsLoggedIn = true;
+                return Page();
             }
             else
             {
-                return RedirectToPage("Index");
+                AttemptsRemaining--;
+
+                if (AttemptsRemaining == 0)
+                {
+                    ModelState.AddModelError(string.Empty, "Too many incorrect attempts. Please try again later.");
+                    return Page();
+                }
+
+                ModelState.AddModelError("Password", $"Incorrect password. {AttemptsRemaining} attempts remaining.");
+                return Page();
             }
-            return Page();
         }
     }
 }

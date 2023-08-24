@@ -1,0 +1,53 @@
+﻿@page "/NotFound"
+@model LinkAggregatorWeb.Pages.User.ErrorModel
+
+@{
+    ViewData["Title"] = "404 NotFound";
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/bootstrap-CyborgTheme.css" asp-append-version="true" />
+</head>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:black;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .not-found {
+            text-align: center;
+            padding: 20px;
+            background-color: grey;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .not-found h1 {
+            font-size: 48px;
+            color: white;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="not-found">
+        <h1>404 Not Found</h1>
+        <p>That URL must be invalid or it's after expiration date. <br />
+            Contact with URL provider
+        </p>
+    </div>
+</body>
+</html>
+@{
+}

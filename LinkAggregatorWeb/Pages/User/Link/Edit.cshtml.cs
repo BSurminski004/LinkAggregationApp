@@ -30,7 +30,6 @@ namespace LinkAggregatorWeb.Pages.User.Link
             if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.HashCode == HyperLink.HashCode) != null)
             {
                 ModelState.AddModelError("Hyperlink.HashCode", "That Hashcode already exists!\n");
-                TempData["failed"] = "Thats Hashcode already exists!";
             }
 
             if (ModelState.IsValid)

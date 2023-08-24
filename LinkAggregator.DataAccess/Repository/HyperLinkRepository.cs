@@ -12,13 +12,6 @@ namespace LinkAggregator.DataAccess.Repository
             _db = db;
         }
 
-        public string RenderHashCode(HyperLink hyperLink)
-        {
-            string hashCode = (hyperLink.ValidFrom.ToString() + hyperLink.Id.ToString())
-                .Replace(':', '(').Replace('/', '^').Replace(' ', '!');
-            return hashCode;
-        }
-
         public void Save()
         {
             _db.SaveChanges();

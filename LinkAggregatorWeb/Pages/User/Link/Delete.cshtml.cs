@@ -1,4 +1,5 @@
 using LinkAggregation.Models;
+using LinkAggregator.DataAccess.Repository;
 using LinkAggregator.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,10 +10,12 @@ namespace LinkAggregatorWeb.Pages.User.Link
     public class DeleteModel : PageModel
     {
         private IHyperLinkRepository _HyperLinkRepository { get; set; }
+        private IStatisticsRepository _StatisticsRepository { get; set; }
         public HyperLink HyperLink { get; set; }
-        public DeleteModel(IHyperLinkRepository hyperLinkRepository)
+        public DeleteModel(IHyperLinkRepository hyperLinkRepository, IStatisticsRepository statisticsRepository)
         {
             _HyperLinkRepository = hyperLinkRepository;
+            _StatisticsRepository = statisticsRepository;
         }
         public void OnGet(int id)
         {

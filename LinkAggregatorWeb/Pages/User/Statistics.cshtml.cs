@@ -1,25 +1,34 @@
-using LinkAggregation.Models;
+﻿using LinkAggregation.Models;
 using LinkAggregator.DataAccess.Repository.IRepository;
+using LinkAggregator.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace LinkAggregatorWeb.Pages.User
 {
     public class StatisticsModel : PageModel
     {
-        private IHyperLinkRepository _HyperLinkRepository { get; set; }
-        public IEnumerable<HyperLink> HyperLinks { get; set; }
-        public string[] labels;
-        public StatisticsModel(IHyperLinkRepository hyperLinkRepository)
+        private IStatisticsRepository _statisticRepository;
+        public string urlVisitAmountsJson { get; set; }
+        public string mostActiveIpAddressesJson { get; set; }
+        public string allLocalizalizationsJson { get; set; }
+        public string monthlyVisitsJson { get; set; }
+        public IEnumerable<Statistic> Statistics { get; set; }
+
+        public StatisticsModel(IStatisticsRepository statisticRepository)
         {
-            _HyperLinkRepository = hyperLinkRepository;
+            _statisticRepository = statisticRepository;
         }
-        public void OnGet()
+
+        public async void OnGetAsync()
         {
-            HyperLinks = _HyperLinkRepository.GetAll();
-            labels = HyperLinks.Select(x => x.Name).ToArray();
-            string labelsFinish = string.Join(",", labels);
-            ViewData["Labels"] = string.Join(",", labels);
+            Statistics = _statisticRepository.GetData().OrderByDescending(x => x.DateVisit);
+
+            urlVisitAmountsJson = JsonSerializer.Serialize(_statisticRepository.BuildUrlVisitAmountsChart());
+            mostActiveIpAddressesJson = JsonSerializer.Serialize(_statisticRepository.BuildMostActiveIpAddressesChart());
+            allLocalizalizationsJson = JsonSerializer.Serialize(_statisticRepository.BuildLocalizationChart());
+            monthlyVisitsJson = JsonSerializer.Serialize(_statisticRepository.BuildMonthlyVisitChart());
         }
     }
 }

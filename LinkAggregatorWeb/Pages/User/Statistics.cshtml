@@ -1,85 +1,140 @@
 ﻿@page
 @model LinkAggregatorWeb.Pages.User.StatisticsModel
 
-<div style="display:flex">
-    <div style="width: 200px; background-color: #f0f0f0; padding: 10px;">
-        <h3 style="color:black">YOUR URLs</h3>
-        <ol>
-            @foreach (var item in Model.HyperLinks)
-            {
-                <li><button>@item.Name</button></li>
-            }
-        </ol>
+@{
+    ViewData["Title"] = "Hyperlinks";
+}
+<h1>Your URLs statistics</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <canvas id="barChart" width="400" height="200"></canvas>
     </div>
-
-    <div class="container p-3 justify-content-center">
-        <h2 class="text-white pl-3">URLs STATISTICS</h2>
-        <div class="d-flex justify-content-center w-100">
-            <br /><br />
-            <canvas id="urlVisitsChart" class="w-50 h-50"></canvas>
-            <br /><br />
-            <canvas id="dayOfVisitUrl" class="w-25 h-25"></canvas>
-        </div>
-
-        <button id="copyButton" onclick="copyTextToClipboard()">Skopiuj tekst</button>
-
+    <div class="col-md-6">
+        <canvas id="pointChart" width="400" height="200"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="barChart2" width="400" height="200"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="barChart3" width="400" height="200"></canvas>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    function copyTextToClipboard(var textToCopy) {
-        var textToCopy = "Link to new data"; // Tutaj umieść tekst, który chcesz skopiować
-        var textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-
-        //alert("Tekst został skopiowany do schowka!");
-    }
 
 
-    const VisitsCharts = document.getElementById('urlVisitsChart');
-    var dataFromDb = @Json.Serialize(Model.labels);
-    new Chart(VisitsCharts, {
-        type: 'bar',
-        data: {
-            labels: dataFromDb,
+<div class="container">
+    <h1>All Activities</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th style="color:#2a9fd6">HyperLink</th>
+                <th>Ip Address</th>
+                <th style="color:#2a9fd6">Localization</th>
+                <th>Date Visit</th>
+                <th style ="color:#2a9fd6">Time Visit</th>
+                <th>Referer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stat in Model.Statistics)
+            {
+                <tr class="expanded-row">
+                    <td>@stat.HyperLinkName</td>
+                    <td>@stat.IpNumber</td>
+                    <td>@stat.Localization</td>
+                    <td>@stat.DateVisit</td>
+                    <td>@stat.TimeVisit</td>
+                    <td>@stat.Referrer</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var jsonUrlVisits = @Html.Raw(Model.urlVisitAmountsJson);
+        var jsonMostActiveIp = @Html.Raw(Model.mostActiveIpAddressesJson);
+        var jsonAllLocalizalizations = @Html.Raw(Model.allLocalizalizationsJson);
+        var jsonMonthlyVisitsJson = @Html.Raw(Model.monthlyVisitsJson);
+
+        var barData = {
+            labels: jsonUrlVisits.map(item => item.Name),
             datasets: [{
-                label: 'Amount of visits to your URLs',
-                data: [12, 19, 3, 5, 2, 3],
+                label: "Total Visits",
+                data: jsonUrlVisits.map(item => item.TotalVisits),
+                backgroundColor: "rgba(140, 2, 2, 0.8)",
+                borderColor: "rgba(140, 2, 2, 0.8)",
                 borderWidth: 1
             }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        };
+
+        var bar2Data = {
+            labels: jsonAllLocalizalizations.map(item => item.Localization),
+            datasets: [{
+                label: "URLs was visit from",
+                data: jsonAllLocalizalizations.map(item => item.TotalVisits),
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderWidth: 1
+            }]
+        };
+
+        var bar3Data = {
+
+            labels: jsonMostActiveIp.map(item => item.IpAddress),
+            datasets: [{
+                label: "URLs was visit from",
+                data: jsonMostActiveIp.map(item => item.TotalVisits),
+                backgroundColor: "rgb(102, 0, 204, 0.4)",
+                borderColor: "rgb(102, 0, 204, 1)",
+                borderWidth: 1
+            }]
+        };
+
+        var pointData = {
+            datasets: [{
+                label: "Visits for each URL in last 30 days",
+                data: jsonMonthlyVisitsJson.map(item => ({ x: item.DateVisit, y: item.TotalVisits })),
+                borderColor: "blue",
+                backgroundColor: "blue"
+            }],
+            //labels: Array.from({ length: 30 }, (_, i) => (i + 1).toString())
+        };
+
+        var ctxBar = document.getElementById('barChart').getContext('2d');
+        var ctxBar2 = document.getElementById('barChart2').getContext('2d');
+        var ctxBar3 = document.getElementById('barChart3').getContext('2d');
+        var ctxPoint = document.getElementById('pointChart').getContext('2d');
+
+        var barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: barData
+        });
+
+        var barChart2 = new Chart(ctxBar2, {
+            type: 'bar',
+            data: bar2Data
+        });
+
+        var barChart3 = new Chart(ctxBar3, {
+            type: 'bar',
+            data: bar3Data
+        });
+
+        var pointChart = new Chart(ctxPoint, {
+            type: 'scatter',
+            data: pointData,
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: false
+                    }
                 }
             }
-        }
-    });
-
-    const VisitUrl = document.getElementById('dayOfVisitUrl');
-    new Chart(VisitUrl, {
-        type: 'pie',
-        data: {
-            labels: dataFromDb,
-            datasets: [{
-                label: 'This Month visits',
-                data: [100, 30, 55, 28, 2],
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    'rgb(255, 205, 150)',
-                    'rgb(32, 205, 150)'
-                ],
-                hoverOffset: 4
-            }]
-        }
-    });
-</script>
-
+        });
+    </script>
+}

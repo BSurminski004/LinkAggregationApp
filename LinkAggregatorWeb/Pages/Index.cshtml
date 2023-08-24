@@ -10,17 +10,45 @@
 </head>
 
 <div class="welcome-section">
-    <br /><br />
-    <br /><br />
-    <h1 class="display-4" >Welcome to <b>LinkAggregation App</b></h1>
-    <br /><br />
-    <div class="mb-3">
-        <form class="form-floating">
-            <input asp-for="InputPassword" >
-            <span asp-validation-for="InputPassword" class="text-danger"></span>
-        </form>
-    </div>
-    <div class="button-container" type>
-        <a href="User/Link/Index" class="get-started-btn" style="text-decoration:none">Get Started...</a>
-    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <h1 class="display-4">Welcome to <b>LinkAggregator App</b></h1>
+    <br />
+    <br />
+    @if (!Model.IsLoggedIn)
+    {
+        @if (Model.AttemptsRemaining > 0)
+        {
+            <form method="post">
+                <label for="password">Password:</label>
+                <input asp-for="Password" type="password"/>
+                @*<input type="password" id="password" name="Password" />*@
+                <div class="button-container" type>
+                    <button type="submit" class="get-started-btn" style="text-decoration:none">Get Started</button>
+                </div>
+                @*<span asp-validation-for="Password" class="text-danger"></span>*@
+            </form>
+        }
+        else
+        {
+            <p>Too many incorrect attempts. Please try again later.</p>
+        }
+    }
+    else
+    {
+        <p>You are now logged in. Redirecting to the Main Page...</p>
+        <script>
+            setTimeout(function () {
+                window.location.href = "User/Link/Index";
+            }, 100);
+        </script>
+    }
 </div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
