@@ -6,20 +6,28 @@
 }
 <h1>Your URLs statistics</h1>
 
-<div class="row">
-    <div class="col-md-6">
-        <canvas id="barChart" width="400" height="200"></canvas>
+@if (Model.Statistics.Count() <= 1)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="barChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="barChart2" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="barChart3" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="visitChart" width="400" height="200"></canvas>
+        </div>
     </div>
-    <div class="col-md-6">
-        <canvas id="barChart2" width="400" height="200"></canvas>
-    </div>
-    <div class="col-md-6">
-        <canvas id="barChart3" width="400" height="200"></canvas>
-    </div>
-    <div class="col-md-6">
-        <canvas id="visitChart" width="400" height="200"></canvas>
-    </div>
-</div>
+}
+else
+{
+    <h4>No data to generate charts</h4>
+}
+
 <br />
 
 <div class="container">
