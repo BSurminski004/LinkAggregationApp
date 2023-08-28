@@ -33,9 +33,6 @@ namespace LinkAggregatorWeb
                 app.UseHsts();
             }
 
-
-            //Dodac serwis do obslugi http
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

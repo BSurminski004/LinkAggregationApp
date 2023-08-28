@@ -23,7 +23,7 @@ namespace LinkAggregatorWeb.Pages.User
 
         public async void OnGetAsync()
         {
-            Statistics = _statisticRepository.GetData().OrderByDescending(x => x.DateVisit);
+            Statistics = _statisticRepository.GetData().OrderByDescending(x => x.DateVisit).ThenByDescending(x => x.TimeVisit);
 
             urlVisitAmountsJson = JsonSerializer.Serialize(_statisticRepository.BuildUrlVisitAmountsChart());
             mostActiveIpAddressesJson = JsonSerializer.Serialize(_statisticRepository.BuildMostActiveIpAddressesChart());

@@ -28,7 +28,6 @@ namespace LinkAggregatorWeb.Pages.User.Link
             DateSort = sortOrder == "date_asc" ? "date_desc" : "date_asc";
             CurrentSort = sortOrder;
             CurrentFilter = searchString;
-            
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -42,10 +41,10 @@ namespace LinkAggregatorWeb.Pages.User.Link
                     HyperLinks = HyperLinks.OrderByDescending(s => s.Name);
                     break;
                 case "date_asc":
-                    HyperLinks = HyperLinks.OrderBy(s => s.ValidFrom);
+                    HyperLinks = HyperLinks.OrderBy(s => s.ValidTo);
                     break;
                 case "date_desc":
-                    HyperLinks = HyperLinks.OrderByDescending(s => s.ValidFrom);
+                    HyperLinks = HyperLinks.OrderByDescending(s => s.ValidTo);
                     break;
                 default:
                     HyperLinks = HyperLinks.OrderBy(s => s.Name);

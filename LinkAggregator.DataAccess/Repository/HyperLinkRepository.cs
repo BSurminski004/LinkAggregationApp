@@ -24,6 +24,8 @@ namespace LinkAggregator.DataAccess.Repository
             hyperLinkFromDb.HashCode = hyperLink.HashCode;
             hyperLinkFromDb.ValidFrom = hyperLink.ValidFrom;
             hyperLinkFromDb.ValidTo = hyperLink.ValidTo;
+            if ((DateTime.Now - hyperLink.ValidTo < TimeSpan.Zero) && hyperLinkFromDb.IsValid == false)
+            { hyperLinkFromDb.IsValid = true; }
         }
 
         public void IsValidHyperLinks(IEnumerable<HyperLink> hyperLinks)

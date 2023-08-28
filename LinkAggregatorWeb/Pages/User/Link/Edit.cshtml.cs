@@ -27,7 +27,7 @@ namespace LinkAggregatorWeb.Pages.User.Link
                 ModelState.AddModelError("Hyperlink.ValidFrom", "Minimum validation time is 24h!");
             }
 
-            if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.HashCode == HyperLink.HashCode) != null)
+            if (_HyperLinkRepository.GetAll().FirstOrDefault(x => x.HashCode == HyperLink.HashCode && x.Id != HyperLink.Id) != null)
             {
                 ModelState.AddModelError("Hyperlink.HashCode", "That Hashcode already exists!\n");
             }

@@ -11,27 +11,27 @@
         <canvas id="barChart" width="400" height="200"></canvas>
     </div>
     <div class="col-md-6">
-        <canvas id="pointChart" width="400" height="200"></canvas>
-    </div>
-    <div class="col-md-6">
         <canvas id="barChart2" width="400" height="200"></canvas>
     </div>
     <div class="col-md-6">
         <canvas id="barChart3" width="400" height="200"></canvas>
     </div>
+    <div class="col-md-6">
+        <canvas id="visitChart" width="400" height="200"></canvas>
+    </div>
 </div>
-
+<br />
 
 <div class="container">
     <h1>All Activities</h1>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped w-100">
         <thead>
             <tr>
                 <th style="color:#2a9fd6">HyperLink</th>
                 <th>Ip Address</th>
                 <th style="color:#2a9fd6">Localization</th>
                 <th>Date Visit</th>
-                <th style ="color:#2a9fd6">Time Visit</th>
+                <th style="color:#2a9fd6">Time Visit</th>
                 <th>Referer</th>
             </tr>
         </thead>
@@ -61,6 +61,7 @@
         var jsonAllLocalizalizations = @Html.Raw(Model.allLocalizalizationsJson);
         var jsonMonthlyVisitsJson = @Html.Raw(Model.monthlyVisitsJson);
 
+       
         var barData = {
             labels: jsonUrlVisits.map(item => item.Name),
             datasets: [{
@@ -87,7 +88,7 @@
 
             labels: jsonMostActiveIp.map(item => item.IpAddress),
             datasets: [{
-                label: "URLs was visit from",
+                label: "Most active IP addresses",
                 data: jsonMostActiveIp.map(item => item.TotalVisits),
                 backgroundColor: "rgb(102, 0, 204, 0.4)",
                 borderColor: "rgb(102, 0, 204, 1)",
@@ -95,46 +96,43 @@
             }]
         };
 
-        var pointData = {
-            datasets: [{
-                label: "Visits for each URL in last 30 days",
-                data: jsonMonthlyVisitsJson.map(item => ({ x: item.DateVisit, y: item.TotalVisits })),
-                borderColor: "blue",
-                backgroundColor: "blue"
-            }],
-            //labels: Array.from({ length: 30 }, (_, i) => (i + 1).toString())
-        };
 
-        var ctxBar = document.getElementById('barChart').getContext('2d');
-        var ctxBar2 = document.getElementById('barChart2').getContext('2d');
-        var ctxBar3 = document.getElementById('barChart3').getContext('2d');
-        var ctxPoint = document.getElementById('pointChart').getContext('2d');
+            var ctxBar = document.getElementById('barChart').getContext('2d');
+            var ctxBar2 = document.getElementById('barChart2').getContext('2d');
+            var ctxBar3 = document.getElementById('barChart3').getContext('2d');
+            
 
-        var barChart = new Chart(ctxBar, {
-            type: 'bar',
-            data: barData
-        });
+            var barChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: barData
+            });
 
-        var barChart2 = new Chart(ctxBar2, {
-            type: 'bar',
-            data: bar2Data
-        });
+            var barChart2 = new Chart(ctxBar2, {
+                type: 'bar',
+                data: bar2Data
+            });
 
-        var barChart3 = new Chart(ctxBar3, {
-            type: 'bar',
-            data: bar3Data
-        });
+            var barChart3 = new Chart(ctxBar3, {
+                type: 'bar',
+                data: bar3Data
+            });
 
-        var pointChart = new Chart(ctxPoint, {
-            type: 'scatter',
-            data: pointData,
-            options: {
-                scales: {
-                    x: {
-                        beginAtZero: false
-                    }
-                }
+
+        var ctxScatter = document.getElementById('visitChart').getContext('2d');
+        var jsonMonthlyVisitsJson = @Html.Raw(Model.monthlyVisitsJson);
+
+            var scatterChart = new Chart(ctxScatter, {
+            type: 'line',
+            data: {
+                labels: jsonMonthlyVisitsJson.map(item => item.DateVisit),
+                datasets: [{
+                    label: 'Daily visits',
+                    data: jsonMonthlyVisitsJson.map(item => item.TotalVisits),
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
             }
         });
-    </script>
+    </script>S
 }

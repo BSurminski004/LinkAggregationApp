@@ -31,6 +31,7 @@
         </div>
     </form>
     <br /><br />
+    @*<table class="table table-bordered table-striped w-100">*@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -59,9 +60,12 @@
                 <th class="text-center">
                     Copy
                 </th>
+                <th class="text-center" style="color:#2a9fd6">
+                    Valid From
+                </th>
                 <th class="text-center">
-                    <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort" style="text-decoration:none">
-                        Valid From
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort" style="color:white; text-decoration:none;">
+                        Valid To
                     </a>
                 </th>
                 <th></th>

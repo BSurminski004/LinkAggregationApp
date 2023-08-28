@@ -4,8 +4,7 @@ using LinkAggregation.Models;
 using LinkAggregator.DataAccess.DBContext;
 using LinkAggregator.DataAccess.Repository.IRepository;
 using LinkAggregator.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+using System.Collections.Generic;
 
 namespace LinkAggregator.DataAccess.Repository
 {
@@ -56,13 +55,14 @@ namespace LinkAggregator.DataAccess.Repository
         {
             var result = from st in _db.Statistic
                          group st by st.DateVisit into g
+                         //where st.DateVisit between GetDate()-30 and GetDate()
                          orderby g.Count() descending
                          select new StatisticMonthlyVisitData
                          {
                              DateVisit = g.Key,
                              TotalVisits = g.Count()
                          };
-
+            result = result.OrderBy(x => x.DateVisit);
             return result;
         }
 
@@ -96,22 +96,27 @@ namespace LinkAggregator.DataAccess.Repository
 
         public void CreateStatistic(string ipAddress, string referer, HyperLink hyperlink)
         {
+            string localization;
             string token = "cb9f4bdbf77f37";
+
             client = new IPinfoClient.Builder()
                 .AccessToken(token)
                 .Build();
             _ipResponse = client.IPApi.GetDetails(ipAddress);
+            localization = _ipResponse.CountryName;
+            if (referer == ""){ referer = "Not obtain"; }
+            if (localization == null) { localization = "Not obtain"; }
 
             this.AddStatistic(new Statistic()
             {
                 HyperLinkName = hyperlink.Name,
                 Referrer = referer,
+                Localization = localization,
                 IpNumber = ipAddress,
                 DateVisit = DateTime.Now.ToString("dd-MM-yyyy"),
                 TimeVisit = DateTime.Now.ToString("HH:mm"),
                 Hyperlink = hyperlink,
-                HyperLinkId = hyperlink.Id,
-                Localization = _ipResponse.CountryName
+                HyperLinkId = hyperlink.Id
             });
             this.Save();     
         }
