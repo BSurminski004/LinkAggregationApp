@@ -83,8 +83,8 @@
 
 <p>To jest ogólny opis projektu LinkAggregator. Możesz dostosować go do swoich potrzeb, dodając więcej szczegółów, dokumentacji oraz instrukcji instalacji i korzystania z aplikacji.</p>
 
-<img src="Images/mainPage.png.jpg" alt="Application Main Page">
-<img src="Images/Charts.png.jpg" alt="Charts">
+<img src="Images/mainPage.png" alt="Application Main Page">
+<img src="Images/Charts.png" alt="Charts">
 
 </body>
 </html>
