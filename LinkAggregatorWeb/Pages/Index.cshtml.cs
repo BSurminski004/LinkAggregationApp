@@ -6,7 +6,7 @@ namespace LinkAggregatorWeb.Pages
 {
     public class IndexModel : PageModel
     {
-        private const string CorrectPassword = "pass123"; 
+        private const string CorrectPassword = "pass2345#"; 
         private const int MaxAttempts = 3;
 
         [BindProperty]
